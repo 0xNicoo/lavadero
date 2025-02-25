@@ -7,6 +7,9 @@ import java.util.List;
 
 @Entity
 @Data
+@Table(indexes = {
+        @Index(name = "email_index", columnList = "email")
+})
 public class Client {
 
     @Id

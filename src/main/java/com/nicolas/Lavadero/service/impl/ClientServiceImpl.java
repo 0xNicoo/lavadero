@@ -2,6 +2,8 @@ package com.nicolas.Lavadero.service.impl;
 
 import com.nicolas.Lavadero.dto.request.ClientDTOIn;
 import com.nicolas.Lavadero.dto.response.ClientDTO;
+import com.nicolas.Lavadero.exception.custom.BadRequestException;
+import com.nicolas.Lavadero.exception.error.Error;
 import com.nicolas.Lavadero.model.Client;
 import com.nicolas.Lavadero.repository.ClientRepository;
 import com.nicolas.Lavadero.service.ClientService;
@@ -22,7 +24,10 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ClientDTO create(ClientDTOIn clientDTOIn) {
-        //TODO: Validar mail unico
+        Optional<Client> clientOptional = clientRepository.findByEmail(clientDTOIn.getEmail());
+        if(clientOptional.isPresent()){
+            throw new BadRequestException(Error.CLIENT_EMAIL_ALREADY_EXIST);
+        }
         Client client = ClientMapper.MAPPER.toEntity(clientDTOIn);
         client = clientRepository.save(client);
         return ClientMapper.MAPPER.toDto(client);
@@ -32,7 +37,7 @@ public class ClientServiceImpl implements ClientService {
     public ClientDTO get(Long id) {
         Optional<Client> clientOptional = clientRepository.findById(id);
         if (clientOptional.isEmpty()){
-            //TODO: Agregar manejo excepciones
+            throw new BadRequestException(Error.CLIENT_NOT_FOUND);
         }
         return ClientMapper.MAPPER.toDto(clientOptional.get());
     }
