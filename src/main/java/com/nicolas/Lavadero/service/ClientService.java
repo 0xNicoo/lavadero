@@ -1,5 +1,6 @@
 package com.nicolas.Lavadero.service;
 
+import com.nicolas.Lavadero.dto.request.AssociateVehicleDTO;
 import com.nicolas.Lavadero.dto.request.ClientDTOIn;
 import com.nicolas.Lavadero.dto.response.ClientDTO;
 
@@ -11,4 +12,8 @@ public interface ClientService {
     ClientDTO get(Long id);
 
     List<ClientDTO> getAll();
+
+    void assignVehicle(Long clientId, AssociateVehicleDTO associateVehicleDTO);
+
+
 }

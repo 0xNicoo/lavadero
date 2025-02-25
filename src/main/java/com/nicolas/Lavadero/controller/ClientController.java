@@ -1,10 +1,12 @@
 package com.nicolas.Lavadero.controller;
 
+import com.nicolas.Lavadero.dto.request.AssociateVehicleDTO;
 import com.nicolas.Lavadero.dto.request.ClientDTOIn;
 import com.nicolas.Lavadero.dto.response.ClientDTO;
 import com.nicolas.Lavadero.service.ClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,5 +42,12 @@ public class ClientController {
     public ResponseEntity<List<ClientDTO>> getAll(){
         List<ClientDTO> response = clientService.getAll();
         return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "Associate vehicle to a client")
+    @PostMapping("/{clientId}/vehicles")
+    public ResponseEntity<String> associate(@PathVariable Long clientId, @RequestBody AssociateVehicleDTO associateVehicleDTO){
+        clientService.assignVehicle(clientId, associateVehicleDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

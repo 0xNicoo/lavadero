@@ -7,6 +7,9 @@ import java.util.List;
 
 @Entity
 @Data
+@Table(indexes = {
+        @Index(name = "registration_index", columnList = "registration")
+})
 public class Vehicle {
 
     @Id

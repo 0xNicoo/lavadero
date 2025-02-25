@@ -1,11 +1,14 @@
 package com.nicolas.Lavadero.service.impl;
 
+import com.nicolas.Lavadero.dto.request.AssociateVehicleDTO;
 import com.nicolas.Lavadero.dto.request.ClientDTOIn;
 import com.nicolas.Lavadero.dto.response.ClientDTO;
 import com.nicolas.Lavadero.exception.custom.BadRequestException;
 import com.nicolas.Lavadero.exception.error.Error;
 import com.nicolas.Lavadero.model.Client;
+import com.nicolas.Lavadero.model.Vehicle;
 import com.nicolas.Lavadero.repository.ClientRepository;
+import com.nicolas.Lavadero.repository.VehicleRepository;
 import com.nicolas.Lavadero.service.ClientService;
 import com.nicolas.Lavadero.service.mapper.ClientMapper;
 import org.springframework.stereotype.Service;
@@ -17,9 +20,11 @@ import java.util.Optional;
 public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
+    private final VehicleRepository vehicleRepository;
 
-    public ClientServiceImpl(ClientRepository clientRepository) {
+    public ClientServiceImpl(ClientRepository clientRepository, VehicleRepository vehicleRepository) {
         this.clientRepository = clientRepository;
+        this.vehicleRepository = vehicleRepository;
     }
 
     @Override
@@ -35,16 +40,36 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ClientDTO get(Long id) {
-        Optional<Client> clientOptional = clientRepository.findById(id);
-        if (clientOptional.isEmpty()){
-            throw new BadRequestException(Error.CLIENT_NOT_FOUND);
-        }
-        return ClientMapper.MAPPER.toDto(clientOptional.get());
+        Client client = getClientById(id);
+        return ClientMapper.MAPPER.toDto(client);
     }
 
     @Override
     public List<ClientDTO> getAll() {
         List<Client> clients = clientRepository.findAll();
         return ClientMapper.MAPPER.toDto(clients);
+    }
+
+    @Override
+    public void assignVehicle(Long clientId, AssociateVehicleDTO associateVehicleDTO) {
+        Optional<Vehicle> vehicleOptional = vehicleRepository.findById(associateVehicleDTO.getVehicleId());
+        if(vehicleOptional.isEmpty()){
+            throw new BadRequestException(Error.VEHICLE_NOT_FOUND);
+        }
+        Vehicle vehicle = vehicleOptional.get();
+        Client client = getClientById(clientId);
+        if(vehicle.getClient().getId() == client.getId()){
+            throw new BadRequestException(Error.VEHICLE_ALREADY_ASSIGN_TO_CLIENT);
+        }
+        client.getVehicles().add(vehicle);
+        clientRepository.save(client);
+    }
+
+    private Client getClientById(Long id) {
+        Optional<Client> clientOptional = clientRepository.findById(id);
+        if (clientOptional.isEmpty()){
+            throw new BadRequestException(Error.CLIENT_NOT_FOUND);
+        }
+        return clientOptional.get();
     }
 }
