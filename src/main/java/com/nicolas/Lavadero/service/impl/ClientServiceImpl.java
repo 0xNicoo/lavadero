@@ -64,6 +64,7 @@ public class ClientServiceImpl implements ClientService {
         client.getVehicles().add(vehicle);
         vehicle.setClient(client);
         clientRepository.save(client);
+        vehicleRepository.save(vehicle);
     }
 
     private Client getClientById(Long id) {
