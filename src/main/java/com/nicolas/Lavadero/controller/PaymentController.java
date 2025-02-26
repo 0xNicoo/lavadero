@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/payment")
-@Tag(name = "Payment Type", description = "Payment endpoints")
+@Tag(name = "Payment", description = "Payment endpoints")
 public class PaymentController {
 
     private final PaymentService paymentService;

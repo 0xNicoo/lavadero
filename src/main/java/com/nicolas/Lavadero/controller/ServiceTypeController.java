@@ -1,8 +1,6 @@
 package com.nicolas.Lavadero.controller;
 
-import com.nicolas.Lavadero.dto.request.ClientDTOIn;
 import com.nicolas.Lavadero.dto.request.ServiceTypeDTOIn;
-import com.nicolas.Lavadero.dto.response.ClientDTO;
 import com.nicolas.Lavadero.dto.response.ServiceTypeDTO;
 import com.nicolas.Lavadero.service.ServiceTypeService;
 import io.swagger.v3.oas.annotations.Operation;
