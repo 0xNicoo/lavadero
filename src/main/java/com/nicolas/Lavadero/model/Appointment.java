@@ -24,7 +24,7 @@ public class Appointment {
     private ServiceType serviceType;
 
     @ManyToOne
-    @JoinColumn(name = "vehicle_id", nullable = false)
+    @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
 
     @OneToOne(cascade = CascadeType.ALL)

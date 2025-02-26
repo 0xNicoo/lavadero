@@ -1,5 +1,6 @@
 package com.nicolas.Lavadero.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -10,5 +11,6 @@ public class PaymentDTO {
     private long id;
     private BigDecimal amount;
     private LocalDateTime date;
+    @JsonIgnore
     private AppointmentDTO appointment;
 }

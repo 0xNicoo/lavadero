@@ -1,5 +1,6 @@
 package com.nicolas.Lavadero.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nicolas.Lavadero.model.AppointmentStatus;
 import com.nicolas.Lavadero.model.Payment;
 import com.nicolas.Lavadero.model.ServiceType;
@@ -12,7 +13,7 @@ public class AppointmentDTO {
     private long id;
     private LocalDateTime date;
     private AppointmentStatus status;
-    private ServiceType serviceType;
+    private ServiceTypeDTO serviceType;
     private VehicleSummaryDTO vehicle;
-    private Payment payment;
+    private PaymentDTO payment;
 }

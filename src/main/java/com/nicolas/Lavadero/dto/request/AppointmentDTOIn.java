@@ -13,5 +13,4 @@ public class AppointmentDTOIn {
 
     @NotNull
     private Long serviceTypeId;
-    private Long vehicleId;
 }
