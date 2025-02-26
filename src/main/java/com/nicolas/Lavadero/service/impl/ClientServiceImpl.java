@@ -12,6 +12,7 @@ import com.nicolas.Lavadero.repository.VehicleRepository;
 import com.nicolas.Lavadero.service.ClientService;
 import com.nicolas.Lavadero.service.mapper.ClientMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -50,6 +51,7 @@ public class ClientServiceImpl implements ClientService {
         return ClientMapper.MAPPER.toDto(clients);
     }
 
+    @Transactional
     @Override
     public void assignVehicle(Long clientId, AssociateVehicleDTO associateVehicleDTO) {
         Optional<Vehicle> vehicleOptional = vehicleRepository.findById(associateVehicleDTO.getVehicleId());

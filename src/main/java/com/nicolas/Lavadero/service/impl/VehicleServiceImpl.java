@@ -12,6 +12,7 @@ import com.nicolas.Lavadero.repository.VehicleRepository;
 import com.nicolas.Lavadero.service.VehicleService;
 import com.nicolas.Lavadero.service.mapper.VehicleMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -48,6 +49,7 @@ public class VehicleServiceImpl implements VehicleService {
         return VehicleMapper.MAPPER.toDto(vehicles);
     }
 
+    @Transactional
     @Override
     public void assignAppointment(Long vehicleId, AssociateAppointmentDTO associateAppointmentDTO) {
         Optional<Appointment> appointmentOptional = appointmentRepository.findById(associateAppointmentDTO.getAppointmentId());
@@ -60,7 +62,9 @@ public class VehicleServiceImpl implements VehicleService {
         }
         Vehicle vehicle = getVehicleById(vehicleId);
         vehicle.getAppointments().add(appointment);
+        appointment.setVehicle(vehicle);
         vehicleRepository.save(vehicle);
+        appointmentRepository.save(appointment);
     }
 
     private Vehicle getVehicleById(Long id){
