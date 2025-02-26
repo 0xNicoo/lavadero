@@ -11,6 +11,7 @@ public enum Error implements ErrorCode {
     APPOINTMENT_ALREADY_TAKEN("2003", "El turno ya esta asignado a otro vehiculo"),
     APPOINTMENT_ALREADY_PAID("2004", "El turno ya esta pago"),
     APPOINTMENT_NOT_FINISH("2005", "El turno aun no se completo"),
+    APPOINTMENT_INVALID_STATUS("2006", "Estado invalido"),
     SERVICE_TYPE_NOT_FOUND("3001", "No se encontro el tipo de servicio");
     private final String code;
 

@@ -1,6 +1,7 @@
 package com.nicolas.Lavadero.controller;
 
 import com.nicolas.Lavadero.dto.request.AppointmentDTOIn;
+import com.nicolas.Lavadero.dto.request.AppointmentStatusDTO;
 import com.nicolas.Lavadero.dto.response.AppointmentDTO;
 import com.nicolas.Lavadero.service.AppointmentService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,6 +40,13 @@ public class AppointmentController {
     @GetMapping("/all")
     public ResponseEntity<List<AppointmentDTO>> getAll(){
         List<AppointmentDTO> response = appointmentService.getAll();
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "Change appointment status")
+    @PostMapping("/{appointmentId}/status")
+    public ResponseEntity<AppointmentDTO> changeStatus(@PathVariable Long appointmentId ,@RequestBody AppointmentStatusDTO appointmentStatusDTO){
+        AppointmentDTO response = appointmentService.changeStatus(appointmentStatusDTO, appointmentId);
         return ResponseEntity.ok(response);
     }
 
