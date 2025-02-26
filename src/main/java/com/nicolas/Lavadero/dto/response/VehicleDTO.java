@@ -13,5 +13,5 @@ public class VehicleDTO {
     private String registration;
     private VehicleType vehicleType;
     private ClientSummaryDTO client;
-    private List<Appointment> appointments;
+    private List<AppointmentDTO> appointments;
 }
