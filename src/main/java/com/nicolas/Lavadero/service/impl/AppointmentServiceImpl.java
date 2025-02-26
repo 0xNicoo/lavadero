@@ -5,7 +5,9 @@ import com.nicolas.Lavadero.dto.response.AppointmentDTO;
 import com.nicolas.Lavadero.exception.custom.BadRequestException;
 import com.nicolas.Lavadero.exception.error.Error;
 import com.nicolas.Lavadero.model.Appointment;
+import com.nicolas.Lavadero.model.ServiceType;
 import com.nicolas.Lavadero.repository.AppointmentRepository;
+import com.nicolas.Lavadero.repository.ServiceTypeRepository;
 import com.nicolas.Lavadero.service.AppointmentService;
 import com.nicolas.Lavadero.service.mapper.AppointmentMapper;
 import org.springframework.stereotype.Service;
@@ -18,17 +20,26 @@ import java.util.Optional;
 public class AppointmentServiceImpl implements AppointmentService {
 
     private final AppointmentRepository appointmentRepository;
+    private final ServiceTypeRepository serviceTypeRepository;
 
-    public AppointmentServiceImpl(AppointmentRepository appointmentRepository) {
+    public AppointmentServiceImpl(AppointmentRepository appointmentRepository,
+                                  ServiceTypeRepository serviceTypeRepository) {
         this.appointmentRepository = appointmentRepository;
+        this.serviceTypeRepository = serviceTypeRepository;
     }
 
     @Override
     public AppointmentDTO create(AppointmentDTOIn appointmentDTOIn) {
+        Optional<ServiceType> serviceTypeOptional = serviceTypeRepository.findById(appointmentDTOIn.getServiceTypeId());
+        if(serviceTypeOptional.isEmpty()){
+            throw new BadRequestException(Error.SERVICE_TYPE_NOT_FOUND);
+        }
         if(appointmentDTOIn.getDate().isBefore(LocalDateTime.now())){
             throw new BadRequestException(Error.APPOINTMENT_INVALID_DATE);
         }
+        ServiceType serviceType = serviceTypeOptional.get();
         Appointment appointment = AppointmentMapper.MAPPER.toEntity(appointmentDTOIn);
+        appointment.setServiceType(serviceType);
         appointment = appointmentRepository.save(appointment);
         return AppointmentMapper.MAPPER.toDto(appointment);
     }
