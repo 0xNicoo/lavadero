@@ -11,6 +11,5 @@ public class PaymentDTO {
     private long id;
     private BigDecimal amount;
     private LocalDateTime date;
-    @JsonIgnore
-    private AppointmentDTO appointment;
+    private AppointmentSummaryDTO appointment;
 }

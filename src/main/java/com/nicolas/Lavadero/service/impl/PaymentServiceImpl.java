@@ -13,6 +13,7 @@ import com.nicolas.Lavadero.service.AppointmentService;
 import com.nicolas.Lavadero.service.PaymentService;
 import com.nicolas.Lavadero.service.mapper.PaymentMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +29,7 @@ public class PaymentServiceImpl implements PaymentService {
         this.appointmentRepository = appointmentRepository;
     }
 
+    @Transactional
     @Override
     public PaymentDTO create(PaymentDTOIn paymentDTOIn) {
         Optional<Appointment> appointmentOptional = appointmentRepository.findById(paymentDTOIn.getAppointmentId());
@@ -46,6 +48,8 @@ public class PaymentServiceImpl implements PaymentService {
                 .appointment(appointment)
                 .build();
         payment = paymentRepository.save(payment);
+        appointment.setPayment(payment);
+        appointmentRepository.save(appointment);
         return PaymentMapper.MAPPER.toDto(payment);
     }
 
