@@ -31,4 +31,9 @@ public class Appointment {
     @JoinColumn(name = "payment_id", unique = true)
     private Payment payment;
 
+    @PrePersist
+    public void prePersist(){
+        this.status = AppointmentStatus.PENDING;
+    }
+
 }
