@@ -58,10 +58,11 @@ public class ClientServiceImpl implements ClientService {
         }
         Vehicle vehicle = vehicleOptional.get();
         Client client = getClientById(clientId);
-        if(vehicle.getClient().getId() == client.getId()){
+        if(vehicle.getClient() != null && vehicle.getClient().getId() == client.getId()){
             throw new BadRequestException(Error.VEHICLE_ALREADY_ASSIGN_TO_CLIENT);
         }
         client.getVehicles().add(vehicle);
+        vehicle.setClient(client);
         clientRepository.save(client);
     }
 
