@@ -2,6 +2,7 @@ package com.nicolas.Lavadero.controller;
 
 import com.nicolas.Lavadero.dto.request.AssociateAppointmentDTO;
 import com.nicolas.Lavadero.dto.request.VehicleDTOIn;
+import com.nicolas.Lavadero.dto.response.ClientDTO;
 import com.nicolas.Lavadero.dto.response.VehicleDTO;
 import com.nicolas.Lavadero.service.VehicleService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,6 +10,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/vehicle")
@@ -25,6 +28,20 @@ public class VehicleController {
     @PostMapping
     public ResponseEntity<VehicleDTO> create(@RequestBody VehicleDTOIn vehicleDTOIn){
         VehicleDTO response = vehicleService.create(vehicleDTOIn);
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "Get vehicle by id")
+    @GetMapping("/{id}")
+    public ResponseEntity<VehicleDTO> get(@PathVariable Long id){
+        VehicleDTO response = vehicleService.get(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "Get all vehicles")
+    @GetMapping("/all")
+    public ResponseEntity<List<VehicleDTO>> getAll(){
+        List<VehicleDTO> response = vehicleService.getAll();
         return ResponseEntity.ok(response);
     }
 
