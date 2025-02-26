@@ -5,7 +5,10 @@ public enum Error implements ErrorCode {
     CLIENT_NOT_FOUND("0001", "No se encontro el cliente"),
     CLIENT_EMAIL_ALREADY_EXIST("0002", "Ya existe un cliente con ese mail"),
     VEHICLE_NOT_FOUND("1001", "No se encontro el vehiculo"),
-    VEHICLE_ALREADY_ASSIGN_TO_CLIENT("1002", "El vehiculo ya se asigno al cliente");
+    VEHICLE_ALREADY_ASSIGN_TO_CLIENT("1002", "El vehiculo ya se asigno al cliente"),
+    APPOINTMENT_INVALID_DATE("2001", "Fecha invalida para el turno"),
+    APPOINTMENT_NOT_FOUND("2002", "No se encontro el turno"),
+    APPOINTMENT_ALREADY_TAKEN("2003", "El turno ya esta asignado a otro vehiculo");
     private final String code;
 
     private final String message;
