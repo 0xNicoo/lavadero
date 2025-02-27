@@ -14,4 +14,5 @@ public class VehicleDTO {
     private VehicleType vehicleType;
     private ClientSummaryDTO client;
     private List<AppointmentDTO> appointments;
+    private List<VehicleAttributeDTO> attributes;
 }

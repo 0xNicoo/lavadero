@@ -13,4 +13,5 @@ public class VehicleSummaryDTO {
     private String registration;
     private VehicleType vehicleType;
     private ClientSummaryDTO client;
+    private List<VehicleAttributeDTO> attributes;
 }
